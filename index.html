@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STREET CITIZEN — Not Just Clothing. A Way of Life.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --lucky: #4CAF50;
+    --lucky-bright: #66BB6A;
+    --lucky-dark: #388E3C;
+    --lucky-glow: rgba(76,175,80,0.35);
+    --lucky-faint: rgba(76,175,80,0.07);
+    --red: #E53935;
+    --cyan: #00E5FF;
+    --black: #060606;
+    --dark: #0c0c0c;
+    --dark2: #131313;
+    --dark3: #1c1c1c;
+    --grey: #2a2a2a;
+    --mid-grey: #444;
+    --light-grey: #777;
+    --white: #efefef;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-body: 'Barlow Condensed', sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--white);font-family:var(--font-body);overflow-x:hidden;cursor:none}
+  .cursor{width:10px;height:10px;background:var(--lucky);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .08s,background .2s;mix-blend-mode:screen}
+  .cring{width:34px;height:34px;border:1px solid var(--lucky);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .14s ease,width .2s,height .2s,border-color .2s;mix-blend-mode:screen}
+  ::-webkit-scrollbar{width:2px}::-webkit-scrollbar-track{background:var(--black)}::-webkit-scrollbar-thumb{background:var(--lucky)}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1000;opacity:.45}
+  body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(76,175,80,.012) 2px,rgba(76,175,80,.012) 4px);pointer-events:none;z-index:999}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:22px 52px;background:linear-gradient(180deg,rgba(6,6,6,.97) 0%,transparent 100%);border-bottom:1px solid rgba(76,175,80,.08);backdrop-filter:blur(4px)}
+  .nav-logo{font-family:var(--font-display);font-size:26px;letter-spacing:5px;color:var(--white);text-decoration:none}
+  .nav-logo em{color:var(--lucky);font-style:normal}
+  .nav-links{display:flex;gap:44px;list-style:none}
+  .nav-links a{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--light-grey);text-decoration:none;text-transform:uppercase;transition:color .2s;position:relative}
+  .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--lucky);transition:width .3s}
+  .nav-links a:hover{color:var(--lucky)}
+  .nav-links a:hover::after{width:100%}
+  .nav-lang{display:flex;gap:10px;align-items:center}
+  .nav-lang button{background:none;border:none;cursor:none;font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--light-grey);transition:color .2s;padding:2px 0}
+  .nav-lang button.active{color:var(--lucky);border-bottom:1px solid var(--lucky)}
+  .nav-lang button:hover{color:var(--lucky)}
+  .nav-lang .div{color:var(--grey)}
+
+  /* HERO */
+  #hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(76,175,80,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(76,175,80,.06) 1px,transparent 1px);background-size:64px 64px;transform:perspective(900px) rotateX(18deg) scale(1.4);transform-origin:center bottom;animation:gmove 12s linear infinite}
+  @keyframes gmove{0%{background-position:0 0}100%{background-position:0 64px}}
+  .hero-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,var(--black) 80%)}
+  .hero-glow{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(76,175,80,.1) 0%,transparent 65%);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);animation:hbreathe 5s ease-in-out infinite}
+  @keyframes hbreathe{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
+  .hl{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,var(--lucky),transparent);opacity:.12}
+  .hl-l{left:52px}.hl-r{right:52px}
+  .hero-content{position:relative;z-index:2;text-align:center;padding:0 24px}
+  .hero-status{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:10px;letter-spacing:5px;color:var(--lucky);text-transform:uppercase;margin-bottom:32px;animation:fup 1s .2s both}
+  .hdot{width:6px;height:6px;border-radius:50%;background:var(--lucky);animation:blink 1.5s ease-in-out infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+  h1.hero-title{font-family:var(--font-display);font-size:clamp(72px,13vw,190px);line-height:.88;letter-spacing:2px;animation:fup 1s .4s both}
+  h1.hero-title .line{display:block;position:relative}
+  h1.hero-title .accent{color:var(--lucky)}
+  .gw{position:relative;display:inline-block}
+  .gw::before,.gw::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%}
+  .gw::before{color:var(--red);clip-path:polygon(0 0,100% 0,100% 40%,0 40%);animation:ga 4s infinite}
+  .gw::after{color:var(--cyan);clip-path:polygon(0 60%,100% 60%,100% 100%,0 100%);animation:gb 4s infinite}
+  @keyframes ga{0%,88%,100%{transform:translate(0);opacity:0}90%{transform:translate(-5px,2px);opacity:.7}93%{transform:translate(4px,-2px);opacity:.7}96%{transform:translate(-2px,1px);opacity:.7}}
+  @keyframes gb{0%,91%,100%{transform:translate(0);opacity:0}93%{transform:translate(5px,2px);opacity:.7}96%{transform:translate(-4px,-2px);opacity:.7}}
+  .hero-div{width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--lucky),transparent);margin:28px auto;animation:fup 1s .6s both}
+  .hero-tag{font-family:var(--font-body);font-size:clamp(14px,2vw,20px);font-weight:300;letter-spacing:4px;color:var(--light-grey);text-transform:uppercase;animation:fup 1s .7s both}
+  .hero-tag strong{color:var(--white);font-weight:600}
+  .hero-sub{font-family:var(--font-mono);font-size:12px;letter-spacing:2px;color:var(--lucky);margin-top:12px;animation:fup 1s .85s both}
+  .hero-cta{display:flex;gap:20px;justify-content:center;margin-top:52px;animation:fup 1s 1s both}
+  .btn-p{font-family:var(--font-mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;padding:15px 40px;background:var(--lucky);color:var(--black);border:none;cursor:none;text-decoration:none;font-weight:700;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);transition:all .25s}
+  .btn-p:hover{background:var(--lucky-bright);transform:translateY(-3px);box-shadow:0 8px 40px var(--lucky-glow)}
+  .btn-s{font-family:var(--font-mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;padding:15px 40px;background:transparent;color:var(--lucky);border:1px solid var(--lucky-dark);cursor:none;text-decoration:none;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);transition:all .25s}
+  .btn-s:hover{background:var(--lucky-faint);border-color:var(--lucky);box-shadow:0 0 24px var(--lucky-glow)}
+  .hscroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:fin 2s 1.5s both}
+  .hscroll span{font-family:var(--font-mono);font-size:8px;letter-spacing:5px;color:var(--light-grey);text-transform:uppercase}
+  .sbar{width:1px;height:56px;background:linear-gradient(180deg,var(--lucky),transparent);animation:sdrop 2s ease-in-out infinite}
+  @keyframes sdrop{0%,100%{opacity:.2;transform:scaleY(.7);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
+  @keyframes fup{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fin{from{opacity:0}to{opacity:1}}
+
+  /* TICKER */
+  .ticker{background:var(--lucky);overflow:hidden;padding:13px 0}
+  .ticker-track{display:flex;white-space:nowrap;animation:tick 35s linear infinite}
+  .ti{font-family:var(--font-display);font-size:13px;letter-spacing:5px;color:var(--black);text-transform:uppercase;padding:0 28px}
+  .ti::after{content:'//';margin-left:28px;opacity:.3}
+  @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  /* COMMONS */
+  .eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:6px;color:var(--lucky);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:'//';opacity:.4}
+  .stitle{font-family:var(--font-display);font-size:clamp(52px,7vw,100px);line-height:.92;letter-spacing:2px;color:var(--white)}
+  .stitle em{color:var(--lucky);font-style:normal}
+
+  /* STATEMENT */
+  #statement{padding:100px 52px;background:var(--dark);position:relative;overflow:hidden}
+  #statement::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,transparent,var(--lucky),transparent)}
+  .st-inner{max-width:900px}
+  .st-big{font-family:var(--font-display);font-size:clamp(36px,5vw,68px);line-height:1.05;color:var(--white);margin-bottom:40px}
+  .st-big em{color:var(--lucky);font-style:normal}
+  .pillars{display:flex;gap:0;margin-top:56px;border-top:1px solid var(--grey)}
+  .pillar{flex:1;padding:32px 28px;border-right:1px solid var(--grey);transition:background .3s;cursor:none}
+  .pillar:last-child{border-right:none}
+  .pillar:hover{background:var(--lucky-faint)}
+  .p-num{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--lucky);margin-bottom:12px}
+  .p-title{font-family:var(--font-display);font-size:22px;letter-spacing:2px;color:var(--white);margin-bottom:10px}
+  .p-desc{font-family:var(--font-body);font-size:14px;color:var(--light-grey);font-weight:300;line-height:1.6}
+
+  /* COLLECTIONS */
+  #collections{padding:120px 52px;background:var(--black)}
+  .col-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px}
+  .drop-live{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:var(--lucky);border:1px solid var(--lucky-dark);padding:10px 20px;display:flex;gap:8px;align-items:center}
+  .dlive-dot{width:5px;height:5px;border-radius:50%;background:var(--lucky);animation:blink 1.5s infinite}
+  .col-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:auto auto;gap:3px}
+  .cc{position:relative;overflow:hidden;cursor:none;background:var(--dark2)}
+  .cc:first-child{grid-row:span 2}
+  .cc-inner{aspect-ratio:4/5;position:relative;overflow:hidden}
+  .cc:first-child .cc-inner{aspect-ratio:auto;height:100%;min-height:580px}
+  .cbg{position:absolute;inset:0;transition:transform .7s cubic-bezier(.25,.46,.45,.94)}
+  .cc:hover .cbg{transform:scale(1.06)}
+  .bg1{background:radial-gradient(ellipse at 25% 75%,rgba(76,175,80,.25) 0%,transparent 55%),radial-gradient(ellipse at 80% 20%,rgba(229,57,53,.15) 0%,transparent 50%),var(--dark2)}
+  .bg2{background:radial-gradient(ellipse at 70% 30%,rgba(0,229,255,.18) 0%,transparent 55%),var(--dark2)}
+  .bg3{background:radial-gradient(ellipse at 30% 70%,rgba(76,175,80,.15) 0%,transparent 55%),var(--dark2)}
+  .bg4{background:radial-gradient(ellipse at 60% 40%,rgba(229,57,53,.18) 0%,transparent 55%),var(--dark2)}
+  .bg5{background:radial-gradient(ellipse at 50% 50%,rgba(0,229,255,.15) 0%,transparent 55%),var(--dark2)}
+  .cart{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+  .cart svg{width:55%;opacity:.12;transition:opacity .4s}
+  .cc:hover .cart svg{opacity:.25}
+  .ctag{position:absolute;top:18px;left:18px;font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--light-grey)}
+  .cbadge{position:absolute;top:18px;right:18px;font-family:var(--font-mono);font-size:9px;letter-spacing:2px;padding:5px 10px;text-transform:uppercase}
+  .bnew{background:var(--lucky);color:var(--black)}
+  .bltd{border:1px solid var(--lucky);color:var(--lucky)}
+  .bsoon{border:1px solid var(--mid-grey);color:var(--mid-grey)}
+  .cinfo{position:absolute;bottom:0;left:0;right:0;padding:48px 24px 24px;background:linear-gradient(0deg,rgba(0,0,0,.97) 0%,transparent 100%);transform:translateY(16px);transition:transform .4s ease}
+  .cc:hover .cinfo{transform:translateY(0)}
+  .cseries{font-family:var(--font-mono);font-size:9px;letter-spacing:4px;color:var(--lucky);margin-bottom:5px}
+  .cname{font-family:var(--font-display);font-size:30px;letter-spacing:2px;color:var(--white);margin-bottom:5px}
+  .cdesc{font-family:var(--font-body);font-size:13px;color:var(--light-grey);font-weight:300;margin-bottom:14px}
+  .cfooter{display:flex;justify-content:space-between;align-items:center}
+  .cprice{font-family:var(--font-mono);font-size:15px;color:var(--lucky)}
+  .cact{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;color:var(--white);text-transform:uppercase;opacity:0;transition:opacity .3s;text-decoration:none}
+  .cc:hover .cact{opacity:1}
+
+  /* LIFESTYLE */
+  #lifestyle{background:var(--lucky);display:grid;grid-template-columns:1fr 1fr 1fr}
+  .lfb{padding:56px 40px;border-right:1px solid var(--lucky-dark);position:relative;overflow:hidden;transition:background .3s;cursor:none}
+  .lfb:last-child{border-right:none}
+  .lfb:hover{background:var(--lucky-bright)}
+  .lficon{font-family:var(--font-display);font-size:64px;color:var(--black);opacity:.12;position:absolute;top:20px;right:20px;line-height:1}
+  .lfnum{font-family:var(--font-mono);font-size:10px;letter-spacing:4px;color:rgba(0,0,0,.4);margin-bottom:16px;text-transform:uppercase}
+  .lftitle{font-family:var(--font-display);font-size:26px;letter-spacing:2px;color:var(--black);margin-bottom:10px}
+  .lfdesc{font-family:var(--font-body);font-size:14px;color:rgba(0,0,0,.55);font-weight:400;line-height:1.6}
+
+  /* TECH */
+  #tech{padding:120px 52px;background:var(--dark);position:relative;overflow:hidden}
+  .tech-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(76,175,80,.08) 1px,transparent 1px);background-size:28px 28px}
+  .tech-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:2}
+  .tech-vis{position:relative;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+  .orbit{position:absolute;border-radius:50%;border:1px solid;animation:spin linear infinite}
+  .o1{width:340px;height:340px;border-color:rgba(76,175,80,.25);animation-duration:22s}
+  .o2{width:240px;height:240px;border-color:rgba(76,175,80,.18);animation-duration:16s;animation-direction:reverse}
+  .o3{width:150px;height:150px;border-color:rgba(76,175,80,.12);animation-duration:10s}
+  .o1::before,.o2::before,.o3::before{content:'';position:absolute;width:8px;height:8px;border-radius:50%;top:-4px;left:50%;transform:translateX(-50%)}
+  .o1::before{background:var(--lucky)}
+  .o2::before{background:var(--cyan)}
+  .o3::before{background:var(--red)}
+  @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  .tcore{width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,var(--lucky) 0%,var(--lucky-dark) 40%,transparent 70%);animation:cpulse 3s ease-in-out infinite;position:relative;z-index:2}
+  @keyframes cpulse{0%,100%{box-shadow:0 0 30px var(--lucky-glow);transform:scale(1)}50%{box-shadow:0 0 60px var(--lucky-glow);transform:scale(1.1)}}
+  .tech-head{font-family:var(--font-display);font-size:clamp(40px,5vw,72px);line-height:.95;color:var(--white);margin:20px 0 16px}
+  .tech-head em{color:var(--lucky);font-style:normal}
+  .tech-intro{font-family:var(--font-body);font-size:16px;color:var(--light-grey);font-weight:300;line-height:1.7;margin-bottom:48px;max-width:480px}
+  .tlist{display:flex;flex-direction:column}
+  .titem{display:flex;gap:0;border-bottom:1px solid var(--grey);padding:24px 0;cursor:none;transition:background .2s}
+  .titem:first-child{border-top:1px solid var(--grey)}
+  .tnum{font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:var(--lucky);min-width:52px;margin-top:4px}
+  .ttitle{font-family:var(--font-display);font-size:22px;letter-spacing:2px;color:var(--white);margin-bottom:6px}
+  .tdesc{font-family:var(--font-body);font-size:14px;color:var(--light-grey);font-weight:300;line-height:1.6}
+  .titem:hover .ttitle{color:var(--lucky)}
+
+  /* UNIVERSE */
+  #universe{padding:120px 52px;background:var(--black)}
+  .univ-top{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:72px}
+  .univ-intro{font-family:var(--font-body);font-size:18px;color:var(--light-grey);font-weight:300;line-height:1.75}
+  .univ-intro strong{color:var(--white);font-weight:600}
+  .univ-intro em{color:var(--lucky);font-style:normal}
+  .cit-row{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+  .cit{background:var(--dark2);padding:36px 24px;border:1px solid var(--grey);position:relative;cursor:none;overflow:hidden;transition:border-color .3s,background .3s}
+  .cit::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--lucky);transform:scaleX(0);transition:transform .35s;transform-origin:left}
+  .cit:hover{border-color:var(--lucky-dark);background:var(--dark3)}
+  .cit:hover::after{transform:scaleX(1)}
+  .cit-icon{font-size:40px;margin-bottom:24px;line-height:1}
+  .cit-id{font-family:var(--font-mono);font-size:9px;letter-spacing:4px;color:var(--lucky);margin-bottom:8px}
+  .cit-name{font-family:var(--font-display);font-size:24px;letter-spacing:2px;color:var(--white);margin-bottom:6px}
+  .cit-role{font-family:var(--font-mono);font-size:10px;letter-spacing:2px;color:var(--cyan);margin-bottom:14px;text-transform:uppercase}
+  .cit-bio{font-family:var(--font-body);font-size:13px;color:var(--light-grey);line-height:1.65;font-weight:300}
+  .manifesto{margin-top:80px;padding:72px 64px;border:1px solid var(--grey);background:linear-gradient(135deg,var(--dark2) 0%,var(--black) 100%);position:relative;overflow:hidden}
+  .manifesto::before{content:'"';position:absolute;top:-20px;left:40px;font-family:var(--font-display);font-size:240px;color:var(--lucky);opacity:.05;line-height:1;pointer-events:none}
+  .manifesto::after{content:'';position:absolute;bottom:0;right:0;width:200px;height:200px;background:radial-gradient(circle,var(--lucky-glow) 0%,transparent 70%);pointer-events:none}
+  .mfeyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:6px;color:var(--lucky);text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:12px}
+  .mfeyebrow::before{content:'//';opacity:.4}
+  .mfbody{font-family:var(--font-display);font-size:clamp(22px,3vw,40px);line-height:1.3;color:var(--white);position:relative;z-index:1}
+  .mfbody em{color:var(--lucky);font-style:normal}
+
+  /* ABOUT */
+  #about{padding:120px 52px;background:var(--dark);position:relative;overflow:hidden}
+  #about::before{content:'';position:absolute;right:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,transparent,var(--lucky),transparent)}
+  .ab-inner{display:grid;grid-template-columns:1fr 1.3fr;gap:80px;align-items:center}
+  .stat-row{padding:32px 0;border-bottom:1px solid var(--grey);display:flex;gap:24px;align-items:flex-end}
+  .stat-row:first-child{border-top:1px solid var(--grey)}
+  .sbig{font-family:var(--font-display);font-size:80px;color:var(--lucky);line-height:1;letter-spacing:-2px}
+  .slabel{font-family:var(--font-body);font-size:16px;color:var(--white);letter-spacing:2px;text-transform:uppercase;font-weight:600}
+  .ssub{font-family:var(--font-mono);font-size:10px;color:var(--light-grey);letter-spacing:2px;margin-top:4px}
+  .ab-headline{font-family:var(--font-display);font-size:clamp(40px,5vw,68px);line-height:.95;color:var(--white);margin:16px 0 28px}
+  .ab-headline em{color:var(--lucky);font-style:normal}
+  .ab-p{font-family:var(--font-body);font-size:16px;color:var(--light-grey);font-weight:300;line-height:1.8;margin-bottom:20px}
+  .ab-p strong{color:var(--white);font-weight:600}
+  .ab-p em{color:var(--lucky);font-style:normal}
+  .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px}
+  .tag{font-family:var(--font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:8px 14px;border:1px solid var(--grey);color:var(--light-grey);transition:all .2s;cursor:none}
+  .tag:hover{border-color:var(--lucky);color:var(--lucky);background:var(--lucky-faint)}
+
+  /* NEWSLETTER */
+  #newsletter{padding:100px 52px;background:var(--black);border-top:1px solid var(--grey);position:relative;overflow:hidden}
+  #newsletter::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(76,175,80,.07) 0%,transparent 65%);pointer-events:none}
+  .nl-inner{max-width:640px;margin:0 auto;text-align:center;position:relative;z-index:1}
+  .nl-stitle{font-family:var(--font-display);font-size:clamp(40px,5vw,72px);line-height:.92;letter-spacing:2px;color:var(--white);margin:12px 0 16px}
+  .nl-stitle em{color:var(--lucky);font-style:normal}
+  .nl-sub{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:var(--light-grey);margin-bottom:36px;line-height:1.7}
+  .nl-form{display:flex}
+  .nl-form input{flex:1;font-family:var(--font-mono);font-size:12px;padding:16px 20px;background:var(--dark2);border:1px solid var(--grey);border-right:none;color:var(--white);outline:none;cursor:none;transition:border-color .2s}
+  .nl-form input::placeholder{color:var(--mid-grey)}
+  .nl-form input:focus{border-color:var(--lucky)}
+  .nl-form button{font-family:var(--font-mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:16px 28px;background:var(--lucky);color:var(--black);border:none;cursor:none;font-weight:700;transition:background .2s}
+  .nl-form button:hover{background:var(--lucky-bright)}
+
+  /* FOOTER */
+  footer{padding:64px 52px 36px;background:var(--dark);border-top:1px solid var(--grey)}
+  .ft-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:56px}
+  .ft-logo{font-family:var(--font-display);font-size:44px;letter-spacing:4px;color:var(--white)}
+  .ft-logo em{color:var(--lucky);font-style:normal}
+  .ft-slogan{font-family:var(--font-mono);font-size:9px;letter-spacing:4px;color:var(--light-grey);margin-top:6px;text-transform:uppercase}
+  .ft-cols{display:flex;gap:64px}
+  .ft-col h5{font-family:var(--font-mono);font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--lucky);margin-bottom:20px}
+  .ft-col ul{list-style:none}
+  .ft-col li{margin-bottom:10px}
+  .ft-col a{font-family:var(--font-body);font-size:14px;color:var(--light-grey);text-decoration:none;font-weight:300;transition:color .2s}
+  .ft-col a:hover{color:var(--white)}
+  .ft-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(255,255,255,.04)}
+  .ft-copy{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--mid-grey)}
+  .ft-social{display:flex;gap:20px}
+  .ft-social a{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;color:var(--mid-grey);text-decoration:none;text-transform:uppercase;transition:color .2s}
+  .ft-social a:hover{color:var(--lucky)}
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
+  .reveal.up{opacity:1;transform:translateY(0)}
+
+  @media(max-width:960px){
+    nav{padding:16px 24px}
+    .nav-links{display:none}
+    #statement,#collections,#tech,#universe,#about,#newsletter{padding:72px 24px}
+    .pillars{flex-direction:column}
+    .pillar{border-right:none;border-bottom:1px solid var(--grey)}
+    .col-grid{grid-template-columns:1fr}
+    .cc:first-child{grid-row:auto}
+    .cc-inner,.cc:first-child .cc-inner{aspect-ratio:4/5;min-height:auto}
+    .tech-inner{grid-template-columns:1fr}
+    .univ-top{grid-template-columns:1fr}
+    .cit-row{grid-template-columns:1fr 1fr}
+    .ab-inner{grid-template-columns:1fr}
+    #lifestyle{grid-template-columns:1fr}
+    .lfb{border-right:none;border-bottom:1px solid var(--lucky-dark)}
+    .ft-top{flex-direction:column;gap:40px}
+    .ft-cols{flex-wrap:wrap;gap:36px}
+    .manifesto{padding:40px 28px}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cring" id="cring"></div>
+
+<nav>
+  <a href="#hero" class="nav-logo">STREET<em>.</em>CITIZEN</a>
+  <ul class="nav-links">
+    <li><a href="#collections" data-en="Shop" data-es="Tienda">Shop</a></li>
+    <li><a href="#tech" data-en="Technology" data-es="Tecnología">Technology</a></li>
+    <li><a href="#universe" data-en="Universe" data-es="Universo">Universe</a></li>
+    <li><a href="#about" data-en="Manifesto" data-es="Manifiesto">Manifesto</a></li>
+  </ul>
+  <div class="nav-lang">
+    <button class="active" onclick="setLang('en')" id="btn-en">EN</button>
+    <span class="div">/</span>
+    <button onclick="setLang('es')" id="btn-es">ES</button>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-vig"></div>
+  <div class="hero-glow"></div>
+  <div class="hl hl-l"></div>
+  <div class="hl hl-r"></div>
+  <div class="hero-content">
+    <div class="hero-status">
+      <div class="hdot"></div>
+      <span data-en="New Drop Active — Citizen #001" data-es="Nuevo Drop Activo — Ciudadano #001">New Drop Active — Citizen #001</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="line"><span class="gw" data-text="STREET">STREET</span></span>
+      <span class="line accent"><span class="gw" data-text="CITIZEN">CITIZEN</span></span>
+    </h1>
+    <div class="hero-div"></div>
+    <p class="hero-tag" data-en="Not just clothing. <strong>A way of life.</strong>" data-es="No es solo ropa. <strong>Es un estilo de vida.</strong>">Not just clothing. <strong>A way of life.</strong></p>
+    <p class="hero-sub" data-en="// Tech-forward. Street-born. Impossible to ignore." data-es="// Vanguardia tech. Nacido en la calle. Imposible de ignorar.">// Tech-forward. Street-born. Impossible to ignore.</p>
+    <div class="hero-cta">
+      <a href="#collections" class="btn-p" data-en="ENTER THE DROP" data-es="VER EL DROP">ENTER THE DROP</a>
+      <a href="#universe" class="btn-s" data-en="DISCOVER THE UNIVERSE" data-es="DESCUBRIR EL UNIVERSO">DISCOVER THE UNIVERSE</a>
+    </div>
+  </div>
+  <div class="hscroll">
+    <span data-en="SCROLL" data-es="SCROLL">SCROLL</span>
+    <div class="sbar"></div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ti">NOT JUST CLOTHING — A WAY OF LIFE</span>
+    <span class="ti">AR ENABLED EVERY PIECE</span>
+    <span class="ti">STREET CITIZEN</span>
+    <span class="ti">TECH VANGUARD</span>
+    <span class="ti">LIMITED DROPS ONLY</span>
+    <span class="ti">BORN DIFFERENT. STAY DIFFERENT.</span>
+    <span class="ti">3D COLLECTIBLES</span>
+    <span class="ti">DIGITAL IDENTITY</span>
+    <span class="ti">NOT JUST CLOTHING — A WAY OF LIFE</span>
+    <span class="ti">AR ENABLED EVERY PIECE</span>
+    <span class="ti">STREET CITIZEN</span>
+    <span class="ti">TECH VANGUARD</span>
+    <span class="ti">LIMITED DROPS ONLY</span>
+    <span class="ti">BORN DIFFERENT. STAY DIFFERENT.</span>
+    <span class="ti">3D COLLECTIBLES</span>
+    <span class="ti">DIGITAL IDENTITY</span>
+  </div>
+</div>
+
+<section id="statement">
+  <div class="st-inner">
+    <div class="eyebrow reveal" data-en="What We Stand For" data-es="Lo Que Representamos">What We Stand For</div>
+    <p class="st-big reveal" data-en="Most brands sell clothes.<br>We sell <em>identity.</em><br>We sell <em>technology.</em><br>We sell a <em>way of existing</em> in this world." data-es="La mayoría vende ropa.<br>Nosotros vendemos <em>identidad.</em><br>Vendemos <em>tecnología.</em><br>Vendemos una <em>forma de existir</em> en este mundo.">Most brands sell clothes.<br>We sell <em>identity.</em><br>We sell <em>technology.</em><br>We sell a <em>way of existing</em> in this world.</p>
+    <div class="pillars reveal">
+      <div class="pillar">
+        <div class="p-num">01</div>
+        <div class="p-title" data-en="VANGUARD TECH" data-es="TECH DE VANGUARDIA">VANGUARD TECH</div>
+        <p class="p-desc" data-en="AR, digital twins, 3D collectibles. Every garment is a technology artifact — years ahead of the industry." data-es="AR, gemelos digitales, coleccionables 3D. Cada prenda es un artefacto tecnológico — años adelante de la industria.">AR, digital twins, 3D collectibles. Every garment is a technology artifact — years ahead of the industry.</p>
+      </div>
+      <div class="pillar">
+        <div class="p-num">02</div>
+        <div class="p-title" data-en="RADICAL IDENTITY" data-es="IDENTIDAD RADICAL">RADICAL IDENTITY</div>
+        <p class="p-desc" data-en="You don't wear Street Citizen to blend in. You wear it to declare who you are. Loud. Unmistakable. Impossible to copy." data-es="No vistes Street Citizen para encajar. Te lo pones para declarar quién eres. Alto. Inconfundible. Imposible de copiar.">You don't wear Street Citizen to blend in. You wear it to declare who you are. Loud. Unmistakable. Impossible to copy.</p>
+      </div>
+      <div class="pillar">
+        <div class="p-num">03</div>
+        <div class="p-title" data-en="LIMITED. ALWAYS." data-es="LIMITADO. SIEMPRE.">LIMITED. ALWAYS.</div>
+        <p class="p-desc" data-en="We don't restock. We don't mass-produce. Every drop is an event. Every piece is a collectible with a story, a number, and a soul." data-es="No reponemos. No producimos en masa. Cada drop es un evento. Cada prenda tiene historia, número y alma.">We don't restock. We don't mass-produce. Every drop is an event. Every piece is a collectible with a story, a number, and a soul.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="collections">
+  <div class="col-header reveal">
+    <div>
+      <div class="eyebrow" data-en="Current Drop" data-es="Drop Actual">Current Drop</div>
+      <h2 class="stitle" data-en="THE CITIZEN<br>SERIES <em>001</em>" data-es="LA SERIE<br>CIUDADANO <em>001</em>">THE CITIZEN<br>SERIES <em>001</em></h2>
+    </div>
+    <div class="drop-live">
+      <div class="dlive-dot"></div>
+      <span data-en="DROP LIVE NOW" data-es="DROP EN VIVO">DROP LIVE NOW</span>
+    </div>
+  </div>
+  <div class="col-grid">
+    <div class="cc reveal">
+      <div class="cc-inner">
+        <div class="cbg bg1"></div>
+        <div class="cart">
+          <svg viewBox="0 0 220 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="70" y="20" width="80" height="100" stroke="#4CAF50" stroke-width="1.2"/>
+            <circle cx="110" cy="72" r="24" stroke="#4CAF50" stroke-width="1.2"/>
+            <line x1="110" y1="120" x2="110" y2="220" stroke="#4CAF50" stroke-width="1"/>
+            <line x1="70" y1="170" x2="150" y2="170" stroke="#4CAF50" stroke-width="1"/>
+            <path d="M70 220 L110 300 L150 220" stroke="#4CAF50" stroke-width="1"/>
+            <circle cx="70" cy="220" r="5" fill="#E53935" opacity=".8"/>
+            <circle cx="150" cy="220" r="5" fill="#00E5FF" opacity=".8"/>
+            <rect x="20" y="60" width="40" height="2" fill="#4CAF50" opacity=".4"/>
+            <rect x="160" y="60" width="40" height="2" fill="#4CAF50" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="ctag">#001</div>
+        <div class="cbadge bnew" data-en="AR ENABLED" data-es="AR ACTIVADO">AR ENABLED</div>
+        <div class="cinfo">
+          <div class="cseries" data-en="CITIZEN SERIES — THE OBSERVER" data-es="SERIE CIUDADANO — EL OBSERVADOR">CITIZEN SERIES — THE OBSERVER</div>
+          <div class="cname" data-en="OBSERVER TEE" data-es="CAMISETA OBSERVER">OBSERVER TEE</div>
+          <p class="cdesc" data-en="Graphic tee with AR activation. Scan to unlock an exclusive animated story. Numbered." data-es="Camiseta gráfica con AR. Escanea para desbloquear historia animada exclusiva. Numerada.">Graphic tee with AR activation. Scan to unlock an exclusive animated story. Numbered.</p>
+          <div class="cfooter"><div class="cprice">$65 USD</div><a href="#" class="cact" data-en="ADD TO CART →" data-es="AGREGAR →">ADD TO CART →</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="cc reveal">
+      <div class="cc-inner">
+        <div class="cbg bg2"></div>
+        <div class="cart">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="100,18 182,82 155,170 45,170 18,82" stroke="#00E5FF" stroke-width="1.2"/>
+            <polygon points="100,48 152,92 132,152 68,152 48,92" stroke="#00E5FF" stroke-width=".6"/>
+            <circle cx="100" cy="100" r="18" stroke="#E53935" stroke-width="1"/>
+            <circle cx="100" cy="100" r="4" fill="#E53935"/>
+          </svg>
+        </div>
+        <div class="ctag">#002</div>
+        <div class="cbadge bltd" data-en="LIMITED" data-es="LIMITADO">LIMITED</div>
+        <div class="cinfo">
+          <div class="cseries" data-en="URBAN RESISTANCE" data-es="RESISTENCIA URBANA">URBAN RESISTANCE</div>
+          <div class="cname">OUTCAST HOOD</div>
+          <p class="cdesc" data-en="Oversized hoodie. UV-reactive ink. Glow-in-dark print." data-es="Hoodie oversized. Tinta UV reactiva. Impresión fluorescente.">Oversized hoodie. UV-reactive ink. Glow-in-dark print.</p>
+          <div class="cfooter"><div class="cprice">$95 USD</div><a href="#" class="cact" data-en="ADD TO CART →" data-es="AGREGAR →">ADD TO CART →</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="cc reveal">
+      <div class="cc-inner">
+        <div class="cbg bg3"></div>
+        <div class="cart">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="28" y="28" width="144" height="144" stroke="#4CAF50" stroke-width="1"/>
+            <rect x="52" y="52" width="96" height="96" stroke="#4CAF50" stroke-width=".6" transform="rotate(45 100 100)"/>
+            <line x1="28" y1="100" x2="172" y2="100" stroke="#E53935" stroke-width=".6"/>
+            <line x1="100" y1="28" x2="100" y2="172" stroke="#E53935" stroke-width=".6"/>
+            <circle cx="100" cy="100" r="8" stroke="#4CAF50" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="ctag">#003</div>
+        <div class="cinfo">
+          <div class="cseries" data-en="DIGITAL STREETS" data-es="CALLES DIGITALES">DIGITAL STREETS</div>
+          <div class="cname" data-en="GHOST DATA CARGO" data-es="CARGO GHOST DATA">GHOST DATA CARGO</div>
+          <p class="cdesc" data-en="Tactical cargo pants. Stencil print. Street utility." data-es="Pantalón cargo táctico. Estampado stencil. Utilidad urbana.">Tactical cargo pants. Stencil print. Street utility.</p>
+          <div class="cfooter"><div class="cprice">$120 USD</div><a href="#" class="cact" data-en="ADD TO CART →" data-es="AGREGAR →">ADD TO CART →</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="cc reveal">
+      <div class="cc-inner">
+        <div class="cbg bg4"></div>
+        <div class="cart">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="72" stroke="#E53935" stroke-width="1"/>
+            <circle cx="100" cy="100" r="44" stroke="#4CAF50" stroke-width=".6"/>
+            <circle cx="100" cy="100" r="12" fill="#E53935" opacity=".4"/>
+            <line x1="28" y1="100" x2="172" y2="100" stroke="#E53935" stroke-width=".4"/>
+            <line x1="100" y1="28" x2="100" y2="172" stroke="#E53935" stroke-width=".4"/>
+          </svg>
+        </div>
+        <div class="ctag">#004</div>
+        <div class="cbadge bsoon" data-en="COMING SOON" data-es="PRÓXIMAMENTE">COMING SOON</div>
+        <div class="cinfo">
+          <div class="cseries" data-en="LOST CITIZENS" data-es="CIUDADANOS PERDIDOS">LOST CITIZENS</div>
+          <div class="cname">SIGNAL BOMBER</div>
+          <p class="cdesc" data-en="Premium bomber jacket. AR patch on sleeve. Numbered tag." data-es="Bomber jacket premium. Parche AR en manga. Etiqueta numerada.">Premium bomber jacket. AR patch on sleeve. Numbered tag.</p>
+          <div class="cfooter"><div class="cprice">$180 USD</div><a href="#" class="cact" data-en="NOTIFY ME →" data-es="AVISARME →">NOTIFY ME →</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="cc reveal">
+      <div class="cc-inner">
+        <div class="cbg bg5"></div>
+        <div class="cart">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 18 L182 100 L100 182 L18 100 Z" stroke="#00E5FF" stroke-width="1.2"/>
+            <path d="M100 46 L154 100 L100 154 L46 100 Z" stroke="#00E5FF" stroke-width=".5"/>
+            <circle cx="100" cy="100" r="22" stroke="#4CAF50" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="ctag">#005</div>
+        <div class="cbadge bltd" data-en="LIMITED" data-es="LIMITADO">LIMITED</div>
+        <div class="cinfo">
+          <div class="cseries" data-en="CITIZEN SERIES" data-es="SERIE CIUDADANO">CITIZEN SERIES</div>
+          <div class="cname">CAP 001</div>
+          <p class="cdesc" data-en="Structured 6-panel cap. Embroidered logo. QR tag inside." data-es="Gorra 6 paneles estructurada. Logo bordado. QR interior.">Structured 6-panel cap. Embroidered logo. QR tag inside.</p>
+          <div class="cfooter"><div class="cprice">$45 USD</div><a href="#" class="cact" data-en="ADD TO CART →" data-es="AGREGAR →">ADD TO CART →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="lifestyle">
+  <div class="lfb">
+    <div class="lficon">01</div>
+    <div class="lfnum" data-en="Lifestyle" data-es="Estilo de Vida">Lifestyle</div>
+    <div class="lftitle" data-en="MORE THAN WHAT YOU WEAR" data-es="MÁS QUE LO QUE VISTES">MORE THAN WHAT YOU WEAR</div>
+    <p class="lfdesc" data-en="Street Citizen is a declaration. A mindset. A culture that chooses to be different every single day." data-es="Street Citizen es una declaración. Una mentalidad. Una cultura que elige ser diferente cada día.">Street Citizen is a declaration. A mindset. A culture that chooses to be different every single day.</p>
+  </div>
+  <div class="lfb">
+    <div class="lficon">02</div>
+    <div class="lfnum" data-en="Community" data-es="Comunidad">Community</div>
+    <div class="lftitle" data-en="YOU BELONG TO SOMETHING BIGGER" data-es="PERTENECES A ALGO MÁS GRANDE">YOU BELONG TO SOMETHING BIGGER</div>
+    <p class="lfdesc" data-en="Every Citizen is part of a universe. A movement. When you wear it, you join something bigger than fashion." data-es="Cada Ciudadano es parte de un universo. Un movimiento. Al vestirlo, te unes a algo más grande que la moda.">Every Citizen is part of a universe. A movement. When you wear it, you join something bigger than fashion.</p>
+  </div>
+  <div class="lfb">
+    <div class="lficon">03</div>
+    <div class="lfnum" data-en="Differentiation" data-es="Diferenciación">Differentiation</div>
+    <div class="lftitle" data-en="BORN DIFFERENT. STAY DIFFERENT." data-es="DIFERENTE DE ORIGEN. DIFERENTE SIEMPRE.">BORN DIFFERENT. STAY DIFFERENT.</div>
+    <p class="lfdesc" data-en="Street Citizens don't follow trends — they create them. They move first. The rest watches." data-es="Los Street Citizens no siguen tendencias — las crean. Se mueven primero. El resto mira.">Street Citizens don't follow trends — they create them. They move first. The rest watches.</p>
+  </div>
+</section>
+
+<section id="tech">
+  <div class="tech-dots"></div>
+  <div class="tech-inner">
+    <div class="tech-vis reveal">
+      <div class="orbit o1"></div>
+      <div class="orbit o2"></div>
+      <div class="orbit o3"></div>
+      <div class="tcore"></div>
+    </div>
+    <div class="reveal">
+      <div class="eyebrow" data-en="Technology Layer" data-es="Capa Tecnológica">Technology Layer</div>
+      <h2 class="tech-head" data-en="YEARS AHEAD<br>OF THE <em>INDUSTRY</em>" data-es="AÑOS POR DELANTE<br>DE LA <em>INDUSTRIA</em>">YEARS AHEAD<br>OF THE <em>INDUSTRY</em></h2>
+      <p class="tech-intro" data-en="While other brands are figuring out how to stay relevant, Street Citizen is already living in the future. Every piece we make is a portal between the physical and digital worlds." data-es="Mientras otras marcas buscan cómo seguir siendo relevantes, Street Citizen ya vive en el futuro. Cada prenda es un portal entre el mundo físico y el digital.">While other brands are figuring out how to stay relevant, Street Citizen is already living in the future. Every piece we make is a portal between the physical and digital worlds.</p>
+      <div class="tlist">
+        <div class="titem">
+          <div class="tnum">01</div>
+          <div>
+            <div class="ttitle" data-en="AUGMENTED REALITY" data-es="REALIDAD AUMENTADA">AUGMENTED REALITY</div>
+            <p class="tdesc" data-en="Scan any piece. Watch it transform. Characters, animations, exclusive stories — invisible to those who don't belong." data-es="Escanea cualquier prenda. Mírala transformarse. Personajes, animaciones, historias exclusivas — invisibles para quienes no pertenecen.">Scan any piece. Watch it transform. Characters, animations, exclusive stories — invisible to those who don't belong.</p>
+          </div>
+        </div>
+        <div class="titem">
+          <div class="tnum">02</div>
+          <div>
+            <div class="ttitle" data-en="DIGITAL TWIN" data-es="GEMELO DIGITAL">DIGITAL TWIN</div>
+            <p class="tdesc" data-en="Your physical piece has a digital counterpart. Wear your identity in metaverses, platforms, and games. Your identity doesn't stop at the physical world." data-es="Tu prenda física tiene un contraparte digital. Viste tu identidad en metaversos, plataformas y juegos. Tu identidad no se detiene en el mundo físico.">Your physical piece has a digital counterpart. Wear your identity in metaverses, platforms, and games. Your identity doesn't stop at the physical world.</p>
+          </div>
+        </div>
+        <div class="titem">
+          <div class="tnum">03</div>
+          <div>
+            <div class="ttitle" data-en="3D COLLECTIBLES" data-es="COLECCIONABLES 3D">3D COLLECTIBLES</div>
+            <p class="tdesc" data-en="Every drop ships with a limited 3D-printed figure. Numbered. Never restocked. A physical artifact that lives alongside your garment." data-es="Cada drop incluye una figura impresa en 3D. Numerada. Sin reposición. Un artefacto físico que vive junto a tu prenda.">Every drop ships with a limited 3D-printed figure. Numbered. Never restocked. A physical artifact that lives alongside your garment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="universe">
+  <div class="univ-top reveal">
+    <div>
+      <div class="eyebrow" data-en="The Lore" data-es="El Universo">The Lore</div>
+      <h2 class="stitle" data-en="THE STREET<br>CITIZEN <em>UNIVERSE</em>" data-es="EL UNIVERSO<br>STREET <em>CITIZEN</em>">THE STREET<br>CITIZEN <em>UNIVERSE</em></h2>
+    </div>
+    <p class="univ-intro" data-en="There is a city. <strong>Millions of people walk through it.</strong> Most follow the rules. Most try to blend in. But some — the ones who see differently, think differently, exist differently — <em>refuse to be invisible.</em><br><br>They are the Street Citizens. And every piece we make tells their story.">There is a city. <strong>Millions of people walk through it.</strong> Most follow the rules. Most try to blend in. But some — the ones who see differently, think differently, exist differently — <em>refuse to be invisible.</em><br><br>They are the Street Citizens. And every piece we make tells their story.</p>
+  </div>
+  <div class="cit-row">
+    <div class="cit reveal">
+      <div class="cit-icon">👁️</div>
+      <div class="cit-id">CITIZEN #001</div>
+      <div class="cit-name" data-en="THE OBSERVER" data-es="EL OBSERVADOR">THE OBSERVER</div>
+      <div class="cit-role" data-en="Street Photographer" data-es="Fotógrafo Callejero">Street Photographer</div>
+      <p class="cit-bio" data-en="Watches the city from rooftops. Captures what others ignore. The city has a language — he translates it." data-es="Observa la ciudad desde los tejados. Captura lo que otros ignoran. La ciudad tiene un idioma — él lo traduce.">Watches the city from rooftops. Captures what others ignore. The city has a language — he translates it.</p>
+    </div>
+    <div class="cit reveal">
+      <div class="cit-icon">💀</div>
+      <div class="cit-id">CITIZEN #002</div>
+      <div class="cit-name">THE OUTCAST</div>
+      <div class="cit-role" data-en="Underground Artist" data-es="Artista Underground">Underground Artist</div>
+      <p class="cit-bio" data-en="Paints at 3am. The city erases her work by morning. She paints again. The walls remember." data-es="Pinta a las 3am. La ciudad borra su obra al amanecer. Ella vuelve a pintar. Las paredes recuerdan.">Paints at 3am. The city erases her work by morning. She paints again. The walls remember.</p>
+    </div>
+    <div class="cit reveal">
+      <div class="cit-icon">⚡</div>
+      <div class="cit-id">CITIZEN #003</div>
+      <div class="cit-name">THE SIGNAL</div>
+      <div class="cit-role" data-en="Urban Hacker" data-es="Hacker Urbano">Urban Hacker</div>
+      <p class="cit-bio" data-en="Controls the city's frequency from hidden locations. The system believes he doesn't exist. That's exactly the plan." data-es="Controla la frecuencia de la ciudad desde ubicaciones ocultas. El sistema cree que no existe. Eso es exactamente el plan.">Controls the city's frequency from hidden locations. The system believes he doesn't exist. That's exactly the plan.</p>
+    </div>
+    <div class="cit reveal">
+      <div class="cit-icon">🔮</div>
+      <div class="cit-id">CITIZEN #004</div>
+      <div class="cit-name" data-en="THE DREAMER" data-es="EL SOÑADOR">THE DREAMER</div>
+      <div class="cit-role" data-en="Future Architect" data-es="Arquitecto del Futuro">Future Architect</div>
+      <p class="cit-bio" data-en="Builds cities that don't exist yet. Designs in code and concrete. The future belongs to those bold enough to imagine it." data-es="Construye ciudades que aún no existen. Diseña en código y concreto. El futuro pertenece a quienes tienen el valor de imaginarlo.">Builds cities that don't exist yet. Designs in code and concrete. The future belongs to those bold enough to imagine it.</p>
+    </div>
+  </div>
+  <div class="manifesto reveal">
+    <div class="mfeyebrow" data-en="The Manifesto" data-es="El Manifiesto">The Manifesto</div>
+    <p class="mfbody" data-en="The city is full of people who look the same, think the same, want the same things. <em>You are not one of them.</em> You wear your identity like armor. You turn every street into your canvas. Every day is a statement. Every choice is a declaration. <em>You don't follow culture — you build it.</em> That's what it means to be a Street Citizen. <em>Are you one?</em>" data-es="La ciudad está llena de personas que se ven igual, piensan igual, quieren las mismas cosas. <em>Tú no eres uno de ellos.</em> Vistes tu identidad como armadura. Conviertes cada calle en tu lienzo. Cada día es una declaración. Cada elección es un manifiesto. <em>No sigues la cultura — la construyes.</em> Eso es lo que significa ser un Street Citizen. <em>¿Lo eres?</em>">The city is full of people who look the same, think the same, want the same things. <em>You are not one of them.</em> You wear your identity like armor. You turn every street into your canvas. Every day is a statement. Every choice is a declaration. <em>You don't follow culture — you build it.</em> That's what it means to be a Street Citizen. <em>Are you one?</em></p>
+  </div>
+</section>
+
+<section id="about">
+  <div class="ab-inner">
+    <div class="reveal">
+      <div class="stat-row"><div class="sbig">001</div><div><div class="slabel" data-en="Active Citizens" data-es="Ciudadanos Activos">Active Citizens</div><div class="ssub" data-en="and counting" data-es="y creciendo">and counting</div></div></div>
+      <div class="stat-row"><div class="sbig">AR</div><div><div class="slabel" data-en="Every Single Piece" data-es="Cada Prenda">Every Single Piece</div><div class="ssub" data-en="augmented reality enabled" data-es="realidad aumentada activada">augmented reality enabled</div></div></div>
+      <div class="stat-row"><div class="sbig">3D</div><div><div class="slabel" data-en="Collectibles Per Drop" data-es="Coleccionables por Drop">Collectibles Per Drop</div><div class="ssub" data-en="numbered, never restocked" data-es="numerados, sin reposición">numbered, never restocked</div></div></div>
+    </div>
+    <div class="reveal">
+      <div class="eyebrow" data-en="About Street Citizen" data-es="Acerca de Street Citizen">About Street Citizen</div>
+      <h2 class="ab-headline" data-en="WE DON'T MAKE<br>CLOTHES. WE MAKE<br><em>STATEMENTS.</em>" data-es="NO HACEMOS<br>ROPA. HACEMOS<br><em>DECLARACIONES.</em>">WE DON'T MAKE<br>CLOTHES. WE MAKE<br><em>STATEMENTS.</em></h2>
+      <p class="ab-p" data-en="Street Citizen was built at the intersection of <strong>street culture, emerging technology, and radical identity.</strong> We are not a fashion brand. We are a movement that happens to make clothing.">Street Citizen was built at the intersection of <strong>street culture, emerging technology, and radical identity.</strong> We are not a fashion brand. We are a movement that happens to make clothing.</p>
+      <p class="ab-p" data-en="Everything we create is <em>limited, numbered, and impossible to replicate.</em> We don't chase trends. We ignore them. Our only reference point is the future — and we're already there.">Everything we create is <em>limited, numbered, and impossible to replicate.</em> We don't chase trends. We ignore them. Our only reference point is the future — and we're already there.</p>
+      <p class="ab-p" data-en="<strong>Born in the streets. Built with code. Worn by those who refuse to be ordinary.</strong>"><strong>Born in the streets. Built with code. Worn by those who refuse to be ordinary.</strong></p>
+      <div class="tags">
+        <span class="tag" data-en="Rebellion" data-es="Rebeldía">Rebellion</span>
+        <span class="tag" data-en="Identity" data-es="Identidad">Identity</span>
+        <span class="tag" data-en="Tech Vanguard" data-es="Vanguardia Tech">Tech Vanguard</span>
+        <span class="tag" data-en="Street Culture" data-es="Cultura Callejera">Street Culture</span>
+        <span class="tag" data-en="Limited Drops" data-es="Drops Limitados">Limited Drops</span>
+        <span class="tag" data-en="Way of Life" data-es="Estilo de Vida">Way of Life</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="newsletter">
+  <div class="nl-inner reveal">
+    <div class="eyebrow" style="justify-content:center" data-en="Stay Ahead" data-es="Mantente Adelante">Stay Ahead</div>
+    <h2 class="nl-stitle" data-en="JOIN THE<br><em>RESISTANCE</em>" data-es="ÚNETE A LA<br><em>RESISTENCIA</em>">JOIN THE<br><em>RESISTANCE</em></h2>
+    <p class="nl-sub" data-en="First access to drops. AR unlock codes. Citizen stories.<br>No spam. No ads. Just signal." data-es="Acceso prioritario a drops. Códigos AR. Historias de ciudadanos.<br>Sin spam. Sin ads. Solo señal.">First access to drops. AR unlock codes. Citizen stories.<br>No spam. No ads. Just signal.</p>
+    <div class="nl-form">
+      <input type="email" id="email-input" placeholder="your@email.com"/>
+      <button onclick="subscribe()" data-en="SUBSCRIBE" data-es="SUSCRIBIRSE">SUBSCRIBE</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-top">
+    <div>
+      <div class="ft-logo">STREET<em>.</em>CITIZEN</div>
+      <div class="ft-slogan" data-en="// Not just clothing. A way of life." data-es="// No es solo ropa. Es un estilo de vida.">// Not just clothing. A way of life.</div>
+    </div>
+    <div class="ft-cols">
+      <div class="ft-col">
+        <h5 data-en="Shop" data-es="Tienda">Shop</h5>
+        <ul>
+          <li><a href="#" data-en="Current Drop" data-es="Drop Actual">Current Drop</a></li>
+          <li><a href="#" data-en="Tees" data-es="Camisetas">Tees</a></li>
+          <li><a href="#" data-en="Hoodies" data-es="Hoodies">Hoodies</a></li>
+          <li><a href="#" data-en="Accessories" data-es="Accesorios">Accessories</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h5 data-en="Universe" data-es="Universo">Universe</h5>
+        <ul>
+          <li><a href="#" data-en="Citizens" data-es="Ciudadanos">Citizens</a></li>
+          <li><a href="#" data-en="AR Experience" data-es="Experiencia AR">AR Experience</a></li>
+          <li><a href="#" data-en="3D Collectibles" data-es="Coleccionables 3D">3D Collectibles</a></li>
+          <li><a href="#" data-en="Manifesto" data-es="Manifiesto">Manifesto</a></li>
+        </ul>
+      </div>
+      <div class="ft-col">
+        <h5 data-en="Info" data-es="Info">Info</h5>
+        <ul>
+          <li><a href="#" data-en="About" data-es="Nosotros">About</a></li>
+          <li><a href="#" data-en="Shipping" data-es="Envíos">Shipping</a></li>
+          <li><a href="#" data-en="Returns" data-es="Devoluciones">Returns</a></li>
+          <li><a href="#" data-en="Contact" data-es="Contacto">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2025 STREET CITIZEN — ALL RIGHTS RESERVED.</div>
+    <div class="ft-social">
+      <a href="#">INSTAGRAM</a>
+      <a href="#">TIKTOK</a>
+      <a href="#">X</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const cur=document.getElementById('cursor'),crg=document.getElementById('cring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+  (function a(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.14;ry+=(my-ry)*.14;crg.style.left=rx+'px';crg.style.top=ry+'px';requestAnimationFrame(a)})();
+  document.querySelectorAll('a,button,.cc,.cit,.titem,.pillar,.lfb,.tag').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';crg.style.width='56px';crg.style.height='56px';crg.style.borderColor='var(--lucky-bright)'});
+    el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';crg.style.width='34px';crg.style.height='34px';crg.style.borderColor='var(--lucky)'});
+  });
+  let lang='en';
+  function setLang(l){
+    lang=l;
+    document.getElementById('btn-en').classList.toggle('active',l==='en');
+    document.getElementById('btn-es').classList.toggle('active',l==='es');
+    document.querySelectorAll('[data-en]').forEach(el=>{const t=el.getAttribute('data-'+l);if(t)el.innerHTML=t});
+  }
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('up')})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  function subscribe(){
+    const i=document.getElementById('email-input');
+    if(i.value&&i.value.includes('@')){i.value='';i.placeholder=lang==='en'?'✓ Welcome, Citizen.':'✓ Bienvenido, Ciudadano.';i.style.borderColor='var(--lucky)';i.style.color='var(--lucky)'}
+  }
+  document.getElementById('email-input').addEventListener('keypress',e=>{if(e.key==='Enter')subscribe()});
+</script>
+</body>
+</html>
