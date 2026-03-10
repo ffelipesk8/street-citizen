@@ -285,6 +285,20 @@
     .ft-cols{flex-wrap:wrap;gap:36px}
     .manifesto{padding:40px 28px}
   }
+
+  /* VIDEO FRAME IN HERO */
+  .hero-video-frame{position:relative;width:100%;max-width:860px;margin:44px auto 0;animation:fup 1s 1.3s both}
+  .vf-label{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--g);text-transform:uppercase;display:block;margin-bottom:8px}
+  .vf-corners{position:absolute;inset:0;pointer-events:none;z-index:3}
+  .vc{position:absolute;width:14px;height:14px;border-color:var(--green);border-style:solid}
+  .vc.tl{top:0;left:0;border-width:2px 0 0 2px}
+  .vc.tr{top:0;right:0;border-width:2px 2px 0 0}
+  .vc.bl{bottom:0;left:0;border-width:0 0 2px 2px}
+  .vc.br{bottom:0;right:0;border-width:0 2px 2px 0}
+  .vf-inner{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden;border:1px solid rgba(0,255,65,0.2)}
+  .vf-inner iframe{width:100%;height:100%;border:none;display:block}
+  .vf-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,65,0.018) 3px,rgba(0,255,65,0.018) 4px);pointer-events:none;z-index:2}
+  .vf-badge{position:absolute;bottom:12px;right:12px;font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--green);background:rgba(0,0,0,0.85);border:1px solid rgba(0,255,65,0.3);padding:4px 10px;z-index:3}
 </style>
 </head>
 <body>
@@ -328,6 +342,17 @@
     <div class="hero-cta">
       <a href="#collections" class="btn-p" data-en="ENTER THE DROP" data-es="VER EL DROP">ENTER THE DROP</a>
       <a href="#universe" class="btn-s" data-en="DISCOVER THE UNIVERSE" data-es="DESCUBRIR EL UNIVERSO">DISCOVER THE UNIVERSE</a>
+    <div class="hero-video-frame">
+      <span class="vf-label">// STREET CITIZEN — OFFICIAL FILM</span>
+      <div class="vf-corners">
+        <span class="vc tl"></span><span class="vc tr"></span>
+        <span class="vc bl"></span><span class="vc br"></span>
+      </div>
+      <div class="vf-inner">
+        <iframe src="https://www.youtube-nocookie.com/embed/8zhXFNNNCSc?autoplay=1&mute=1&loop=1&playlist=8zhXFNNNCSc&controls=1&rel=0&modestbranding=1&enablejsapi=1" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <div class="vf-scan"></div>
+        <div class="vf-badge" data-en="OFFICIAL FILM 2025" data-es="FILM OFICIAL 2025">OFFICIAL FILM 2025</div>
+      </div>
     </div>
   </div>
   <div class="hscroll">
